@@ -20,8 +20,26 @@ article{
 }
 </style>
 <script>
+function YouTubeGetID(url){// borrowed from https://gist.github.com/takien/4077195
+  var ID = '';
+  url = url.replace(/(>|<)/gi,'').split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
+  if(url[2] !== undefined) {
+    ID = url[2].split(/[^0-9a-z_\-]/i);
+    ID = ID[0];
+  }
+  else {
+    ID = url;
+  }
+    return ID;
+}
+
 function linkForm(){
-	document.getElementById('test').innerHTML = "test";
+
+	var x = document.getElementById('field').value;
+	var videoID = YouTubeGetID(x); 
+	var genericString = "https://www.youtube.com/embed/"; 
+	var result = genericString.concat(videoID); 
+	document.getElementById('test').innerHTML ="<iframe width='420' height='315' src="+ result + "></iframe>";
 }
 
 
@@ -30,9 +48,9 @@ function linkForm(){
 This is the header. 
 </header>
 <article>
-<input type="button" onclick="linkForm()" value="Display">
-
-<p id="test">
-</p>
+<input id="field" type="text">
+<button onclick="linkForm()">Click Here</button>
+<div id="test">
+</div>
 </article>
 </html>
